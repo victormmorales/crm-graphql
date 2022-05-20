@@ -191,6 +191,22 @@ const resolvers = {
       await Cliente.findOneAndDelete({ _id: id });
       return "Cliente eliminado";
     },
+    nuevoPedido: async (_, { input }, ctx) => {
+      const { cliente } = input;
+
+      //verificar si cliente existe
+      let clienteExiste = await Cliente.findById(cliente);
+      if (!clienteExiste) throw new Error("El cliente no existe");
+
+      //verificar si cliente es del vendedor
+      if (clienteExiste.vendedor.toString() !== ctx.usuario.id) {
+        throw new Error("No tienes las credenciales");
+      }
+
+      //revisar hay stock
+      //asignar vendedor
+      //guardar BD
+    },
   },
 };
 
