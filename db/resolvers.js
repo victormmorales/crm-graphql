@@ -204,6 +204,22 @@ const resolvers = {
       }
 
       //revisar hay stock
+      for await (const articulo of input.pedido) {
+        const { id } = articulo;
+
+        const producto = await Producto.findById(id);
+
+        if (articulo.cantidad > producto.existencia) {
+          throw new Error(
+            `El artículo: ${producto.nombre} excede la cantidad disponible en ${
+              articulo.cantidad - producto.existencia
+            } unidades`
+          );
+        }
+      }
+
+      //crear nuevo pedido
+
       //asignar vendedor
       //guardar DB
     },
