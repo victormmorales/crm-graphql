@@ -205,7 +205,7 @@ const resolvers = {
 
       //revisar hay stock
       //asignar vendedor
-      //guardar BD
+      //guardar DB
     },
   },
 };
