@@ -1,6 +1,8 @@
 const Usuario = require("../models/Usuario");
 const Producto = require("../models/Producto");
 const Cliente = require("../models/Cliente");
+const Pedido = require("../models/Pedido");
+
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 require("dotenv").config({ path: "variables.env" });
@@ -215,13 +217,22 @@ const resolvers = {
               articulo.cantidad - producto.existencia
             } unidades`
           );
+        } else {
+          //restar cantidad al stock disponible
+          producto.existencia = producto.existencia - articulo.cantidad;
+          await producto.save();
         }
       }
 
       //crear nuevo pedido
+      const nuevoPedido = new Pedido(input);
 
       //asignar vendedor
+      nuevoPedido.vendedor = ctx.usuario.id;
+
       //guardar DB
+      const resultado = await nuevoPedido.save();
+      return resultado;
     },
   },
 };
