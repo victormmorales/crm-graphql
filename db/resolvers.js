@@ -352,6 +352,7 @@ const resolvers = {
       //verificar pedido
       const pedido = await Pedido.findById(id);
       if (!pedido) throw new Error("El pedido no existe");
+      console.log(id);
 
       //verificar usuario
       if (pedido.vendedor.toString() !== ctx.usuario.id) {
