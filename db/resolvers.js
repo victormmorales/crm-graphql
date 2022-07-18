@@ -360,7 +360,6 @@ const resolvers = {
 
       //eliminar DB
       await Pedido.findOneAndDelete({ _id: id });
-      console.log(id);
       return "Pedido eliminado";
     },
   },
